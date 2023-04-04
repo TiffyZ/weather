@@ -2,9 +2,8 @@ package com.example.homework.controller;
 
 import com.example.homework.domain.Student;
 import com.example.homework.domain.Teacher;
-import com.example.homework.service.SchoolService;
+import com.example.homework.service.SchoolServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,28 +11,29 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/homework")
 public class SchoolController {
     @Autowired
-    private SchoolService schoolService;
+    private SchoolServiceImpl schoolServiceImpl;
 
     @PostMapping("/students")
     public Student createStudent(@RequestBody Student student) {
-        return schoolService.createStudent(student);
+        return schoolServiceImpl.createStudent(student);
     }
 
-    @PostMapping("/students/{studentId}/teachers")
-    public Teacher createTeacher(@PathVariable Long studentId, @RequestBody Teacher teacher) {
-        return schoolService.createTeacher(studentId, teacher);
+    @PostMapping("/teachers")
+    public Teacher createTeacher(@RequestBody Teacher teacher) {
+        return schoolServiceImpl.createTeacher(teacher);
     }
 
     @GetMapping("/students")
     public List<Student> getAllStudents() {
-        return schoolService.getAllStudents();
+        return schoolServiceImpl.getAllStudents();
     }
 
     @GetMapping("/students/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
-        Optional<Student> studentOptional = schoolService.getStudentById(id);
+        Optional<Student> studentOptional = schoolServiceImpl.getStudentById(id);
         if (studentOptional.isPresent()) {
             return ResponseEntity.ok(studentOptional.get());
         } else {
@@ -43,16 +43,16 @@ public class SchoolController {
 
     @GetMapping("/students/{id}/teachers")
     public List<Teacher> getTeachersByStudentId(@PathVariable Long id){
-        return schoolService.getTeachersForStudent(id);
+        return schoolServiceImpl.getTeachersForStudent(id);
     }
     @GetMapping("/teachers")
     public List<Teacher> getAllTeachers(){
-        return schoolService.getAllTeachers();
+        return schoolServiceImpl.getAllTeachers();
     }
 
     @PutMapping("/students/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
-        ResponseEntity<Student> response = schoolService.updateStudent(id, student);
+        ResponseEntity<Student> response = schoolServiceImpl.updateStudent(id, student);
         return response;
     }
 

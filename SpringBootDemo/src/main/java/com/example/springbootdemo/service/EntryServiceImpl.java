@@ -20,12 +20,14 @@ public class EntryServiceImpl implements EntryService{
 
     public List<Entry> findAll() {
         EntryResponseDTO data = restTemplate.getForObject(url, EntryResponseDTO.class);
+        assert data != null;
         return data.getEntries();
     }
 
     @Override
     public List<Entry> findAll(String auth) {
         EntryResponseDTO data = restTemplate.getForObject(url, EntryResponseDTO.class);
+        assert data != null;
         return data.getEntries()
                 .stream()
                 .filter(e -> e.getAuth().equals(auth))

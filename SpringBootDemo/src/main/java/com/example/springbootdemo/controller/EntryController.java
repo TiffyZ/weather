@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/entry")
+@RequestMapping("demo/entry")
 public class EntryController {
     private final EntryService entryService;
     @Autowired
